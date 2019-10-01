@@ -31,7 +31,7 @@ var express = require("express"),
 // app.use(express.static(publicDir));
 app.use("/node_modules", express.static(__dirname+'node_modules'));
 app.post("/uploads", onUpload);
-app.post('/approve', onApprove);
+app.get('/approve', onApprove);
 app.delete("/uploads/:uuid", onDeleteFile);
 
 function onUpload(req, res) {
@@ -169,7 +169,7 @@ function moveFile(destinationDir, sourceFile, destinationFile, success, failure)
 function moveUploadedFile(file, uuid, success, failure) {
     var destinationDir = 'uploadFiles'+ "/",
         fileDestination = destinationDir + file.name;
-
+        console.log(fileDestination);
     moveFile(destinationDir, file.path, fileDestination, success, failure);
 }
 
@@ -238,15 +238,22 @@ function getChunkFilename(index, count) {
 }
 
 
-function onApprove(fields, file, res){
-    console.log("char obese");
+function onApprove(req, res){
+    file.name = fields.qqfilename;
+    console.log(file.name);
+    //https://stackoverflow.com/questions/8579055/how-do-i-move-files-in-node-js
+    // console.log('1');
+    // console.log("char obese");
+    // console.log(file);
+    // console.log('char2');
+    // console.log(fields);
     const moveUploadedFile = function (file, uuid, success, failure) {
-        console.log("char obese2");
-        var destinationDir = 'DataDir'+ "/",
-            fileDestination = destinationDir + file.name;
-
-        moveFile(destinationDir, file.path, fileDestination, success, failure);
-        res.send();
+        // console.log("char obese2");
+        // var destinationDir = 'DataDir'+ "/",
+        //     fileDestination = destinationDir + file.name;
+        //
+        // moveFile(destinationDir, file.path, fileDestination, success, failure);
+        // res.send();
     };
     moveUploadedFile()
 }
