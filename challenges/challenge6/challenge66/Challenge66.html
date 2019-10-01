@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>challenge 6</title>
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+    <!--    <link rel="stylesheet" type="text/css" href="/media/css/site-examples.css?_=8ffc0b31bc8d9ff82fbb94689dd1d7ff">-->
+    <!--    <link rel="stylesheet" href="challenge6fat.css">-->
+    <link rel="stylesheet" href="https://datatables.net/media/css/site-examples.css?_=8ffc0b31bc8d9ff82fbb94689dd1d7ff">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="6.css">
+    <!--    <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <!--    <script src="http://code.jquery.com/jquery.js"></script>-->
+
+
+</head>
+<body>
+<h1>it's too easy</h1>
+<div>
+    <table id="example" class="display">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Model</th>
+            <th>Variant</th>
+            <th>Range(nm)</th>
+            <th>Height(m)</th>
+            <th>Wingspan(m)</th>
+            <th>Seats</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        <!--        <tr>-->
+        <!--            <td>0</td>-->
+        <!--            <td>Boeing 737</td>-->
+        <!--            <td>-800</td>-->
+        <!--            <td>2935</td>-->
+        <!--            <td>12.55</td>-->
+        <!--            <td>35.79</td>-->
+        <!--            <td>160</td>-->
+
+        <!--        </tr>-->
+        </tbody>
+    </table>
+
+</div>
+<div>
+
+    <div>
+        <label>Range</label>
+        <select type="select" name="options" id="select1">
+            <option class="1" value="0-2001234512"></option>
+            <option class="1" value="00-2001234512">all</option>
+            <option class="1" value="3000-4500">3000-4500</option>
+            <option class="1" value="4501-6000">4501-6000</option>
+            <option class="1" value="6001-8000">6001-8000</option>
+            <option class="1" value="8001-1234567">more than 8000</option>
+        </select>
+    </div>
+    <br>
+    <div>
+        <label>Seats</label>
+        <select type="select" name="options" id="select2">
+            <option class="1" value="0-2001234512"></option>
+            <option class="1" value="00-2001234512">all</option>
+            <option class="1" value="150-200">150-200</option>
+            <option class="1" value="201-300">201-300</option>
+            <option class="1" value="301-350">301-350</option>
+            <option class="1" value="351-12345678901234567890">more than 350</option>
+        </select>
+    </div>
+    <br>
+    <div>
+        <label>Model Name</label>
+        <input type="text" placeholder="Enter Model Name" name="modelName" id="input1">
+    </div>
+
+
+    <button onclick="fat()">Filter</button>
+    <button onclick="no()">show all</button>
+
+</div>
+<script>
+    var table = $("#example").DataTable();
+    $(document).ready(function () {
+        $.ajax(
+            {
+                type: "get",
+                url: "http://localhost:1007/ahMa",
+                // data:"a",
+                success: function (resp) {
+                    for (var i = 0; i < resp.length; i++) {
+                        table.row.add([
+                            resp[i].id,
+                            resp[i].Model,
+                            resp[i].Varient,
+                            resp[i].Range,
+                            resp[i].Height,
+                            resp[i].Wingspan,
+                            resp[i].Seats
+                        ]).draw(false);
+
+                    }
+
+                    console.log(resp)
+
+
+                }
+
+            }
+        )
+    });
+
+    function fat() {
+        var s1 = document.getElementById("select1").value;
+        var s2 = document.getElementById("select2").value;
+        var ii = document.getElementById("input1").value;
+        var s1s = s1.split('-');
+        console.log(s1s);
+        var s2s = s2.split('-');
+        console.log(s2s);
+        table.clear().draw();
+        $.ajax(
+            {
+                type: "get",
+                url: "http://localhost:1007/AhMa2",
+                data: {min: s1s[0], max: s1s[1], min2: s2s[0], max2: s2s[1], m: ii},
+                // data: {min: s1s[0], max: s1s[1], min2: s2s[0], max2: s2s[1]},
+                success: function (resp1) {
+                    // table.clear().draw();
+                    console.log(resp1);
+                    console.log(resp1.length);
+                    for (var i = 0; i < resp1.length; i++) {
+                        table.row.add([
+                            resp1[i].id,
+                            resp1[i].Model,
+                            resp1[i].Varient,
+                            resp1[i].Range,
+                            resp1[i].Height,
+                            resp1[i].Wingspan,
+                            resp1[i].Seats
+                        ]).draw(false);
+
+                    }
+
+
+                }
+            })
+    }
+
+    function no() {
+        $.ajax(
+            {
+                type: "get",
+                url: "http://localhost:1007/ahMa",
+                // data:"a",
+                success: function (resp) {
+                    table.clear().draw();
+                    for (var i = 0; i < resp.length; i++) {
+                        table.row.add([
+                            resp[i].id,
+                            resp[i].Model,
+                            resp[i].Varient,
+                            resp[i].Range,
+                            resp[i].Height,
+                            resp[i].Wingspan,
+                            resp[i].Seats
+                        ]).draw(false);
+
+                    }
+
+                    console.log(resp)
+
+
+                }
+
+            }
+        )
+    }
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+//steps
+//1 create drop down option√
+    //1.1create the drop down√
+        //1.1.1copy and paste√
+    //1.2create the option√
+        //1.2.1 option name√
+        //1.2.2 option value√
+//2 make a second drop down that is dependent on the first one
+    //2.1create the drop down√
+        //2.1.1 copy and paste√
+    //2.2create and apply sets of options for different first option
+        //2.2.1 create table√
+    //2.3know what the first one is selecting
+        //2.3.1
+    //2.4show the options according to the result of the first one
+
+//steps 2.0
+//1 create drop down option√
+//2 make a second drop down that is dependent on the first one
+    //2.1create the drop down√
+    //2.2create and options for different first option√
+    //2.3know what the first one is selecting
+        //2.3.1send the option selected for the first drop down
+    //2.4show the options according to the result of the first one
+
+//steps 3.0
+//send the selected option to the server and than to the database
+//respond to the selected option
+//send the selected option's option to client
+//function respond to change to the first option
+//use loop to display the option in option2

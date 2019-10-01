@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>challenge 5</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="challenge5.css">
+</head>
+<body>
+<h1>Challenge 5</h1>
+<select type="select" name="options" id="select1">
+    <option></option>
+    <option class="1" value="1">1</option>
+    <option class="1" value="2">2</option>
+    <option class="1" value="3">3</option>
+    <option class="1" value="4">4</option>
+</select>
+<br>
+<p>it's too hard </p>
+<br>
+<select id="select2">
+    <option>    </option>
+</select>
+<script type="text/javascript">
+    console.log("1");
+        $("#select1").change(function(){
+            const select1v = document.getElementById("select1").value;
+                console.log("2");
+                console.log("options="+select1v);
+                $.ajax({
+                    type: "post",
+                    url:"http://localhost:1005/ahMa",
+                    data: "options="+select1v,
+                    success: function (resp) {
+                        console.log(resp);
+                        const select2 = document.getElementById("select2");
+                        $("#select2").empty();
+                        for(var i=0; i<resp.length;i++){
+                            const o = document.createElement("option");
+                            o.text = resp[i].dropdown2;
+                            select2.add(o)
+                        }
+                    }
+                })
+            }
+        )
+    
+</script>
+</body>
+</html>
