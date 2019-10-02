@@ -36,7 +36,7 @@ app.delete("/uploads/:uuid", onDeleteFile);
 
 function onUpload(req, res) {
     var form = new multiparty.Form();
-    console.log('charfat');
+    console.log('onUpload');
     form.parse(req, function(err, fields, files) {
         var partIndex = fields.qqpartindex;
 
@@ -139,7 +139,6 @@ function isValid(size) {
 }
 
 function moveFile(destinationDir, sourceFile, destinationFile, success, failure) {
-    console.log(destinationDir);
     mkdirp(destinationDir, function(error) {
         var sourceStream, destStream;
 
@@ -186,7 +185,7 @@ function combineChunks(file, uuid, success, failure) {
         destinationDir = uploadedFilesPath + uuid + "/",
         fileDestination = destinationDir + file.name;
 
-
+        console.log(fileDestination);
     fs.readdir(chunksDir, function(err, fileNames) {
         var destFileStream;
 
@@ -239,23 +238,17 @@ function getChunkFilename(index, count) {
 
 
 function onApprove(req, res){
-    file.name = fields.qqfilename;
-    console.log(file.name);
+
     //https://stackoverflow.com/questions/8579055/how-do-i-move-files-in-node-js
-    // console.log('1');
-    // console.log("char obese");
-    // console.log(file);
-    // console.log('char2');
-    // console.log(fields);
-    const moveUploadedFile = function (file, uuid, success, failure) {
-        // console.log("char obese2");
-        // var destinationDir = 'DataDir'+ "/",
-        //     fileDestination = destinationDir + file.name;
-        //
-        // moveFile(destinationDir, file.path, fileDestination, success, failure);
-        // res.send();
-    };
-    moveUploadedFile()
+    const name = req.query.name;
+    var oldpath = "uploadFiles/"+name;
+    var newpath = "DataDir/"+name;
+    console.log(name);
+    fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;
+        console.log('approved')
+    })
+
 }
 
 

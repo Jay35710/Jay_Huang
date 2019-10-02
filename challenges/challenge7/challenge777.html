@@ -50,8 +50,12 @@
                     <!-------><!-------><!-------><!-------><!------->
                     <div class="qq-file-info">
                         <div class="qq-file-name">
-                            <span class="qq-upload-file-selector qq-upload-file"></span>
-                            <span class="qq-edit-filename-icon-selector qq-btn qq-edit-filename-icon" aria-label="Edit filename"></span>
+                            <!-------><!-------><!-------><!-------><!------->
+                            <!-------><!-------><!-------><!-------><!------->
+                            <span id="name" class="qq-upload-file-selector qq-upload-file"></span>
+                            <span  class="qq-edit-filename-icon-selector qq-btn qq-edit-filename-icon" aria-label="Edit filename"></span>
+                            <!-------><!-------><!-------><!-------><!------->
+                            <!-------><!-------><!-------><!-------><!------->
                         </div>
                         <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
                         <span class="qq-upload-size-selector qq-upload-size"></span>
@@ -105,18 +109,20 @@
         debug: true,
         request: {
             endpoint: 'http://localhost:1007/uploads',
-            // endpoint:/uploads
 
-            // uuidName:''
         }
+
     });
     function approve() {
+        const name = document.getElementById('name').title;
+        console.log(name);
         console.log('ㄥㄤㄣㄢㄡㄠㄟㄞㄝㄜㄛㄚㄩㄨㄧ');
         $.ajax({
             type:'get',
             url:'http://localhost:1007/approve',
-            data: '',
+            data: 'name=' + name,
             success:function () {
+                alert('no no approve');
             }
         })
     }
